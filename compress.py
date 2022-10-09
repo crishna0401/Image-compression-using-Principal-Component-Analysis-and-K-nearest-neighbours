@@ -1,6 +1,8 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import plotly.express as px
+from sklearn.cluster import KMeans
+from sklearn.datasets import load_sample_image
 
 class compress_image():
 
@@ -69,3 +71,40 @@ class compress_image():
 
 
         return compressed_image,reconstructed_image
+    
+    def knn(self):
+        data = self.img / 255.0 # use 0...1 scale
+        data = data.reshape(data.shape[0] * data.shape[1], data.shape[2])
+        
+
+        compression_loss = []
+        for i in [2, 4, 8, 16, 32, 64, 128]:
+            kmeans = KMeans(n_clusters=i, random_state=0)
+            kmeans.fit(data)
+            new_colors = kmeans.cluster_centers_[kmeans.predict(data)]
+            china_recolored = new_colors.reshape(china.shape)
+            mse = mean_squared_error(data, new_colors)
+            compression_loss.append(mse)
+#             print("MSE: ", mse)
+#             plt.imsave('china_%d.jpg' % i, china_recolored)
+
+        # plot the loss
+        plt.plot([2, 4, 8, 16, 32, 64, 128], loss, '-o')
+        plt.xlabel('number of clusters, k')
+        plt.ylabel('MSE')
+        plt.show()
+        
+        # find the best k such that compression loss decrease is negligible
+        for i in range(1, len(compression_loss)):
+            if compression_loss[i] - compression_loss[i-1] < 0.0001:
+                best_k = 2**(i+1)
+                break
+
+        print('Best clusters = ',best_k)
+         # do the compression using the best k
+        kmeans = KMeans(n_clusters=best_k, random_state=0)
+        kmeans.fit(data)
+        new_colors = kmeans.cluster_centers_[kmeans.predict(data)]
+        reconstructed_image = new_colors.reshape(self.img.shape)
+        
+        return reconstructed_image
