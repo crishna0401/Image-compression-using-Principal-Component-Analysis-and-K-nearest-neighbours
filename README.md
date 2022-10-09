@@ -16,3 +16,18 @@ Performed Image compression using PCA and KNN in this repository
 
 ### Reconstruction loss plot
 ![alt text](https://github.com/crishna0401/Image-compression-using-Principal-Component-Analysis-and-K-nearest-neighbours/blob/main/assets/Reconstruction%20loss.png)
+
+
+# Results for image compression using KNN
+
+### Original Image 
+
+![alt text](https://github.com/crishna0401/Image-compression-using-Principal-Component-Analysis-and-K-nearest-neighbours/blob/main/assets/original_image_knn.png)
+
+### Reconstructed image
+
+![alt text](https://github.com/crishna0401/Image-compression-using-Principal-Component-Analysis-and-K-nearest-neighbours/blob/main/assets/recon_knn.png)
+
+
+### Reconstruction loss plot
+![alt text](https://github.com/crishna0401/Image-compression-using-Principal-Component-Analysis-and-K-nearest-neighbours/blob/main/assets/recon_knn.png)
